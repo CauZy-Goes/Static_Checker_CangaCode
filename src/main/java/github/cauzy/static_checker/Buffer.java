@@ -9,9 +9,7 @@ import java.nio.file.Path;
 @Data
 public class Buffer {
 
-    public final String caminhoDoArquivo251;
-
-    public String converterArquivoParaString() {
+    public String converterArquivoParaString(String caminhoDoArquivo251) {
         try {
             return Files.readString(Path.of(caminhoDoArquivo251));
         } catch (IOException e) {
@@ -19,5 +17,9 @@ public class Buffer {
             System.err.println("Erro ao ler o arquivo: " + e.getMessage());
             return "";
         }
+    }
+
+    public String[] quebrarTextoEmLinhas(String texto){
+        return texto.split("\\r?\\n");
     }
 }

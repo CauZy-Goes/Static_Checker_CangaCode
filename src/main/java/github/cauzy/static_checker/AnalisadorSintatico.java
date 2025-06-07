@@ -8,13 +8,15 @@ public class AnalisadorSintatico {
     public static void main(String[] args) {
         List<AtomosCangaCode> listaCanga = preencherListaCanga();
 
-        Buffer buffer251 = new Buffer("src\\main\\java\\github\\cauzy\\static_checker\\input.251");
+        String caminhoDoArquivo = "src\\main\\java\\github\\cauzy\\static_checker\\input.251";
 
-        System.out.println(buffer251.getCaminhoDoArquivo251());
+        Buffer buffer251 = new Buffer();
 
-        System.out.println(buffer251.converterArquivoParaString());
+        String[] textoQuebrado = buffer251.quebrarTextoEmLinhas(buffer251.converterArquivoParaString(caminhoDoArquivo));
 
-        System.out.println("Diretório de execução: " + System.getProperty("user.dir"));
+        for (int i = 0; i < textoQuebrado.length; i++) {
+            System.out.println("Linhas = " + i + " "+ textoQuebrado[i]);
+        }
     }
 
     public static List<AtomosCangaCode> preencherListaCanga() {
