@@ -1,0 +1,32 @@
+program :
+declarations
+    integer ;
+    boolean ;
+endDeclarations
+
+functions
+    funcType :
+    declarations
+        integer ;
+    endDeclarations
+    if > 0 :
+        := + 1 ;
+    else :
+        := 0 ;
+    endIf
+    return ;
+endFunction
+endFunctions
+
+:= 10 ;
+:= true ;
+
+while :
+    := - 1 ;
+    if <= 0 :
+        := false ;
+    endIf
+endWhile
+
+print ;
+endProgram

@@ -6,13 +6,15 @@ import java.util.List;
 public class AnalisadorSintatico {
 
     public static void main(String[] args) {
-        System.out.println("Analisador de Sintatico");
-
         List<AtomosCangaCode> listaCanga = preencherListaCanga();
 
-        for(AtomosCangaCode canga : listaCanga){
-            System.out.println(canga);
-        }
+        Buffer buffer251 = new Buffer("src\\main\\java\\github\\cauzy\\static_checker\\input.251");
+
+        System.out.println(buffer251.getCaminhoDoArquivo251());
+
+        System.out.println(buffer251.converterArquivoParaString());
+
+        System.out.println("Diretório de execução: " + System.getProperty("user.dir"));
     }
 
     public static List<AtomosCangaCode> preencherListaCanga() {
