@@ -1,4 +1,4 @@
-package github.cauzy.static_checker;
+package github.cauzy.static_checker.entidadesDoCompilador;
 
 public record AtomosCangaCode(
         String lexeme

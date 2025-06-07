@@ -1,4 +1,4 @@
-package github.cauzy.static_checker;
+package github.cauzy.static_checker.partesDoCompilador;
 
 import lombok.Data;
 

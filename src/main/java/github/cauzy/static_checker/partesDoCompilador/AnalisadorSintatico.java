@@ -1,4 +1,6 @@
-package github.cauzy.static_checker;
+package github.cauzy.static_checker.partesDoCompilador;
+
+import github.cauzy.static_checker.entidadesDoCompilador.AtomosCangaCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ public class AnalisadorSintatico {
     public static void main(String[] args) {
         List<AtomosCangaCode> listaCanga = preencherListaCanga();
 
-        String caminhoDoArquivo = "src\\main\\java\\github\\cauzy\\static_checker\\input.251";
+        String caminhoDoArquivo = "src\\main\\java\\github\\cauzy\\static_checker\\arquivos\\input.251";
 
         Buffer buffer251 = new Buffer();
 
