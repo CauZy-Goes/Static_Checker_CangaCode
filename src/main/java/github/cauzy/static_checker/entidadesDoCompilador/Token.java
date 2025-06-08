@@ -1,6 +1,6 @@
 package github.cauzy.static_checker.entidadesDoCompilador;
 
-public record AtomoExtraido(
+public record Token(
         AtomoCangaCode atomoCangaCode,
         Integer indiceTabelaSimbolo,
         Integer linha) {

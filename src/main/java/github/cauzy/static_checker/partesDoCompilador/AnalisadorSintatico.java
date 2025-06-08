@@ -14,10 +14,12 @@ public class AnalisadorSintatico {
 
         Buffer buffer251 = new Buffer();
 
-        String[] textoQuebrado = buffer251.quebrarTextoEmLinhas(buffer251.converterArquivoParaString(caminhoDoArquivo));
+        AnalisadorLexico analisadorLexico = new AnalisadorLexico(buffer251, caminhoDoArquivo);
 
-        for (int i = 0; i < textoQuebrado.length; i++) {
-            System.out.println("Linhas = " + i + " "+ textoQuebrado[i]);
+        String [] linhas = analisadorLexico.aplicarFiltros();
+
+        for (String linha : linhas) {
+            System.out.println(linha);
         }
     }
 
