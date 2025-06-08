@@ -23,10 +23,16 @@ public class AnalisadorSintatico {
             System.out.println(linha);
         }
 
-        List<Token> listaT = analisadorLexico.capturarTokensValidos(linhas, listaCanga);
+        List<Token> listaDeTokens = analisadorLexico.capturarTokensValidos(linhas, listaCanga);
 
+        String[] componentes = {
+                "CAUÃ GOES FARIAS; caua.farias@ucsal.edu.br; 71993209370",
+                "GUILHERME ANDRADE DE LACERDA; guilhermeandrade.lacerda@ucsal.edu.br; 71988602565",
+                "KAILAN DE SOUZA DIAS; kailan.dias@ucsal.edu.br; 75988059380"
+        };
 
-
+        GeradorDeArquivoLEX geradorDeArquivoLEX = new GeradorDeArquivoLEX("EQ01", componentes, "input.251");
+        geradorDeArquivoLEX.gerarArquivoLEX(listaDeTokens);
     }
 
     public static List<AtomoCangaCode> preencherListaCanga() {
