@@ -17,13 +17,16 @@ public class AnalisadorSintatico {
 
         AnalisadorLexico analisadorLexico = new AnalisadorLexico(buffer251, caminhoDoArquivo);
 
-        String [] linhas = analisadorLexico.aplicarFiltros();
+        String [] linhas = analisadorLexico.aplicarFiltros(listaCanga);
+
+        for (String linha : linhas) {
+            System.out.println(linha);
+        }
 
         List<Token> listaT = analisadorLexico.capturarTokensValidos(linhas, listaCanga);
 
-        for (Token linha : listaT) {
-            System.out.println(linha);
-        }
+
+
     }
 
     public static List<AtomoCangaCode> preencherListaCanga() {
