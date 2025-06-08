@@ -1,6 +1,7 @@
 package github.cauzy.static_checker.partesDoCompilador;
 
 import github.cauzy.static_checker.entidadesDoCompilador.AtomoCangaCode;
+import github.cauzy.static_checker.entidadesDoCompilador.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ public class AnalisadorSintatico {
 
         String [] linhas = analisadorLexico.aplicarFiltros();
 
-        for (String linha : linhas) {
+        List<Token> listaT = analisadorLexico.capturarTokensValidos(linhas, listaCanga);
+
+        for (Token linha : listaT) {
             System.out.println(linha);
         }
     }
