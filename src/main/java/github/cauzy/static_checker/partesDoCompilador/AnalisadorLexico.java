@@ -15,6 +15,10 @@ public class AnalisadorLexico {
     private final Buffer buffer;
     private final String caminhoArquivo251;
 
+    private final Map<String, Integer> tabelaSimbolos = new HashMap<>();
+    private int proximoIndiceSimbolo = 1;
+    private String contexto = "";
+
     public String[] aplicarFiltros(List<AtomoCangaCode> listaCanga){
 
         String[] linhas = buffer.quebrarTextoEmLinhas(buffer.converterArquivoParaString(caminhoArquivo251));
@@ -74,69 +78,97 @@ public class AnalisadorLexico {
     }
 
     public String[] eliminarAtomosInvalidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
-        Set<String> lexemasValidos = listaCanga.stream()
-                .map(AtomoCangaCode::lexeme)
-                .collect(Collectors.toSet());
+        List<String> resultado = new ArrayList<>();
 
-        Pattern padraoToken = Pattern.compile("==|!=|<=|>=|:=|[a-zA-Z_][a-zA-Z0-9_]*|[(){}\\[\\];,:+\\-*/%<>=#?]");
-
-        String[] resultado = new String[linhas.length];
-
-        for (int i = 0; i < linhas.length; i++) {
+        for (String linha : linhas) {
             StringBuilder novaLinha = new StringBuilder();
-            Matcher matcher = padraoToken.matcher(linhas[i]);
+            for (String lexeme : linha.split("\\s+")) {
+                if (lexeme.isBlank()) continue;
 
-            while (matcher.find()) {
-                String token = matcher.group();
-                if (lexemasValidos.contains(token)) {
-                    novaLinha.append(token).append(" ");
+                boolean valido = listaCanga.stream()
+                        .anyMatch(a -> a.lexeme().equals(lexeme));
+
+                if (valido || ehLexemaIdentificadorValido(lexeme)) {
+                    novaLinha.append(lexeme).append(" ");
                 }
             }
-
-            resultado[i] = novaLinha.toString().strip();
+            resultado.add(novaLinha.toString().trim());
         }
 
-        return resultado;
+        return resultado.toArray(new String[0]);
+    }
+
+    private boolean ehLexemaIdentificadorValido(String lexeme) {
+        return lexeme.matches("[a-zA-Z_][a-zA-Z0-9_]*") ||       // identificadores
+                lexeme.matches("[0-9]+") ||                       // intConst
+                lexeme.matches("[0-9]+\\.[0-9]+([eE][0-9]+)?") || // realConst
+                lexeme.matches("\".*\"") ||                       // stringConst
+                lexeme.matches("'.'");                            // charConst
     }
 
 
     public List<Token> capturarTokensValidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
-
-        Map<String, AtomoCangaCode> mapaLexema = new HashMap<>();
-        for (AtomoCangaCode atomo : listaCanga) {
-            mapaLexema.put(atomo.lexeme(), atomo);
-        }
-
-        Map<String, Integer> indiceSimbolo = new HashMap<>();
-        int contadorIndice = 0;
-
         List<Token> tokens = new ArrayList<>();
-        Pattern padraoToken = Pattern.compile("==|!=|<=|>=|:=|[a-zA-Z_][a-zA-Z0-9_]*|[(){}\\[\\];,:+\\-*/%<>=#?]");
+
+         final Map<String, Integer> tabelaSimbolos = new HashMap<>();
+         int proximoIndiceSimbolo = 1;
+         String contexto = "";
 
         for (int i = 0; i < linhas.length; i++) {
-            String linha = linhas[i];
-            Matcher matcher = padraoToken.matcher(linha);
+            String[] palavras = linhas[i].split("\\s+");
+            int linhaAtual = i + 1;
 
-            while (matcher.find()) {
-                String lexema = matcher.group();
-                if (mapaLexema.containsKey(lexema)) {
-                    // Pega ou cria o índice do símbolo
-                    int indice;
-                    if (indiceSimbolo.containsKey(lexema)) {
-                        indice = indiceSimbolo.get(lexema);
-                    } else {
-                        indice = contadorIndice++;
-                        indiceSimbolo.put(lexema, indice);
+            for (String lexeme : palavras) {
+                if (lexeme.isBlank()) continue;
+
+                // Atualizar contexto
+                if (lexeme.equals("program")) {
+                    contexto = "program";
+                } else if (lexeme.equals("functions")) {
+                    contexto = "functions";
+                }
+
+                // Palavras e símbolos reservados
+                Optional<AtomoCangaCode> reservado = listaCanga.stream()
+                        .filter(a -> a.lexeme().equals(lexeme))
+                        .findFirst();
+
+                if (reservado.isPresent()) {
+                    tokens.add(new Token(reservado.get(), getIndiceTabelaSimbolo(lexeme), linhaAtual));
+                } else {
+                    // Identificadores com escopo
+                    AtomoCangaCode identificador = classificarIdentificador(lexeme);
+                    if (identificador != null) {
+                        tokens.add(new Token(identificador, getIndiceTabelaSimbolo(lexeme), linhaAtual));
                     }
-
-                    // Cria token e adiciona à lista
-                    Token token = new Token(mapaLexema.get(lexema), indice, i + 1);
-                    tokens.add(token);
                 }
             }
         }
 
         return tokens;
+    }
+
+    private AtomoCangaCode classificarIdentificador(String lexeme) {
+        if (lexeme.matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
+            return switch (contexto) {
+                case "program" -> new AtomoCangaCode(lexeme, "IDN01"); // programName
+                case "functions" -> new AtomoCangaCode(lexeme, "IDN03"); // functionName
+                default -> new AtomoCangaCode(lexeme, "IDN02"); // variable
+            };
+        } else if (lexeme.matches("[0-9]+")) {
+            return new AtomoCangaCode(lexeme, "IDN04"); // intConst
+        } else if (lexeme.matches("[0-9]+\\.[0-9]+([eE][0-9]+)?")) {
+            return new AtomoCangaCode(lexeme, "IDN05"); // realConst
+        } else if (lexeme.matches("\".*\"")) {
+            return new AtomoCangaCode(lexeme, "IDN06"); // stringConst
+        } else if (lexeme.matches("'.'")) {
+            return new AtomoCangaCode(lexeme, "IDN07"); // charConst
+        }
+        return null;
+    }
+
+    private int getIndiceTabelaSimbolo(String lexeme) {
+        return tabelaSimbolos.computeIfAbsent(lexeme, k -> proximoIndiceSimbolo++);
     }
 
 }

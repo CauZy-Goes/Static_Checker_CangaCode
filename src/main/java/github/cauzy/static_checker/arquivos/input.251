@@ -1,32 +1,37 @@
-program : //testandooooo
+program MainProgram : // testandooooo
+
 declarations
-    integer ;
-    boolean ;
+    integer idade ;
+    boolean isAtivo ;
 endDeclarations
-PIROADASDASDAS
+
+PIROADASDASDAS // <- isso deve ser rejeitado (inválido)
+
 functions
-    funcType :
+    funcType calcularIdade :
     declarations
-        integer ;
+        integer anos ;
     endDeclarations
-    if > 0 :
-        := + 1 ;
+
+    if idade > 0 :
+        idade := idade + 1 ;
     else :
-        := 0 ;
+        idade := 0 ;
     endIf
-    return ;
+
+    return idade ;
 endFunction
 endFunctions
 
-:= 10 ;
-:= true ;
+idade := 10 ;
+isAtivo := true ;
 
-while :
-    := - 1 ;
-    if <= 0 :
-        := false ;
+while idade > 0 :
+    idade := idade - 1 ;
+    if idade <= 0 :
+        isAtivo := false ;
     endIf
 endWhile
 
-print ;
+print idade ;
 endProgram

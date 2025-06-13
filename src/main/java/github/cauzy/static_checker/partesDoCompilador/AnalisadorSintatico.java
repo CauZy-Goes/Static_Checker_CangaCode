@@ -91,6 +91,16 @@ public class AnalisadorSintatico {
         listaCanga.add(new AtomoCangaCode(">", "SRS21"));
         listaCanga.add(new AtomoCangaCode(">=", "SRS22"));
 
+        // Identificadores
+        listaCanga.add(new AtomoCangaCode("programName", "IDN01"));
+        listaCanga.add(new AtomoCangaCode("variable", "IDN02"));
+        listaCanga.add(new AtomoCangaCode("functionName", "IDN03"));
+        listaCanga.add(new AtomoCangaCode("intConst", "IDN04"));
+        listaCanga.add(new AtomoCangaCode("realConst", "IDN05"));
+        listaCanga.add(new AtomoCangaCode("stringConst", "IDN06"));
+        listaCanga.add(new AtomoCangaCode("charConst", "IDN07"));
+
+
         return listaCanga;
     }
 }
