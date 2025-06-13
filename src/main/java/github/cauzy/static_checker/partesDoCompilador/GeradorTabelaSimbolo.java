@@ -1,6 +1,8 @@
 package github.cauzy.static_checker.partesDoCompilador;
 
+import github.cauzy.static_checker.entidadesDoCompilador.AtomoCangaCode;
 import github.cauzy.static_checker.entidadesDoCompilador.ItemTabelaSimbolo;
+import github.cauzy.static_checker.entidadesDoCompilador.Token;
 
 import java.util.*;
 
@@ -10,34 +12,93 @@ public class GeradorTabelaSimbolo {
     private final Map<String, String> tiposDeclarados = new HashMap<>();
     private int contador = 1;
 
-    public Map<String, ItemTabelaSimbolo> processarLinhas(String[] linhas) {
-        for (int i = 0; i < linhas.length; i++) {
-            String linha = linhas[i].trim();
-            int numeroLinha = i + 1;
+    public Map<String, ItemTabelaSimbolo> processarTokens(List<Token> tokens, List<AtomoCangaCode> listaCanga) {
+        for (Token token : tokens) {
+            String codigoAtomo = token.atomoCangaCode().codigo();
 
-            if (linha.startsWith("integer") || linha.startsWith("string") ||
-                    linha.startsWith("char") || linha.startsWith("real") ||
-                    linha.startsWith("boolean")) {
+            // Só processa identificadores
+            if (codigoAtomo.startsWith("IDN")) {
+                String lexema = token.atomoCangaCode().lexeme();
+                int linha = token.linha();
 
-                String[] partes = linha.split("\\s+");
-                if (partes.length == 2) {
-                    String tipo = tipoParaSigla(partes[0]);
-                    String id = partes[1];
-                    tiposDeclarados.put(id, tipo);
-                    adicionarOuAtualizar(id, tipo, numeroLinha);
-                }
+                String lexemaTruncado = lexema.length() > 35 ? lexema.substring(0, 35) : lexema;
+                int tamAntes = lexema.length();
+                int tamDepois = lexemaTruncado.length();
 
-            } else {
-                // Tentar encontrar identificadores declarados usados na linha
-                for (String id : tiposDeclarados.keySet()) {
-                    if (linha.matches(".*\\b" + id + "\\b.*")) {
-                        adicionarOuAtualizar(id, tiposDeclarados.get(id), numeroLinha);
+                String tipoSimbolo = determinarTipoSimbolo(codigoAtomo);
+
+                String chave = lexema + "-" + codigoAtomo;
+
+                if (!tabela.containsKey(chave)) {
+                    List<Integer> linhas = new ArrayList<>();
+                    linhas.add(linha);
+                    tabela.put(chave, new ItemTabelaSimbolo(
+                            contador++,
+                            codigoAtomo,
+                            lexemaTruncado,
+                            tamAntes,
+                            tamDepois,
+                            tipoSimbolo,
+                            linhas
+                    ));
+                } else {
+                    List<Integer> linhasExistentes = tabela.get(chave).getLinhas();
+                    if (linhasExistentes.size() < 5 && !linhasExistentes.contains(linha)) {
+                        linhasExistentes.add(linha);
                     }
                 }
             }
         }
+        preencherTiposDasVariaveis(tokens);
 
         return tabela;
+    }
+
+    public void preencherTiposDasVariaveis(List<Token> tokens) {
+        String tipoAtual = null;
+
+        for (Token token : tokens) {
+            String codigo = token.atomoCangaCode().codigo();
+            String lexema = token.atomoCangaCode().lexeme();
+
+            // Verificar se o token é um tipo primitivo (ex: integer, string, etc)
+            switch (lexema) {
+                case "integer" -> tipoAtual = "IN";
+                case "string" -> tipoAtual = "ST";
+                case "char" -> tipoAtual = "CH";
+                case "real" -> tipoAtual = "FP";
+                case "boolean" -> tipoAtual = "BL";
+                default -> {
+                    // Se o token for identificador de variável, e temos um tipo corrente
+                    if (tipoAtual != null && codigo.equals("IDN02")) {
+                        for (ItemTabelaSimbolo item : tabela.values()) {
+                            if (item.getLexema().equals(lexema) && item.getCodigo().equals(codigo)) {
+                                item.setTipo(tipoAtual);
+                            }
+                        }
+                    }
+
+                    // Se chegarmos num token que não é tipo nem IDN, resetar tipoAtual
+                    if (!codigo.startsWith("IDN")) {
+                        tipoAtual = null;
+                    }
+                }
+            }
+        }
+    }
+
+
+    private String determinarTipoSimbolo(String codigoAtomo) {
+        return switch (codigoAtomo) {
+            case "IDN01" -> "VD";  // Nome de programa (assumindo tipo Void/VD por enquanto)
+            case "IDN02" -> "-";   // Variáveis: tipo pode ser preenchido depois por outra fase do compilador
+            case "IDN03" -> "VD";  // Nome de função (Void por padrão aqui)
+            case "IDN04" -> "IN";  // Inteiro
+            case "IDN05" -> "FP";  // Floating Point
+            case "IDN06" -> "ST";  // String
+            case "IDN07" -> "CH";  // Char
+            default -> "-";        // Qualquer outro (por segurança)
+        };
     }
 
     private void adicionarOuAtualizar(String id, String tipo, int linha) {

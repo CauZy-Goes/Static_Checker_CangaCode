@@ -39,7 +39,7 @@ public class AnalisadorSintatico {
         GeradorTabelaSimbolo geradorTabelaSimbolo = new GeradorTabelaSimbolo();
         GeradorDeArquivoTAB geradorDeArquivoTAB = new GeradorDeArquivoTAB("EQ01", componentes, "input.251");
 
-        Map<String, ItemTabelaSimbolo> itens =  geradorTabelaSimbolo.processarLinhas(linhas);
+        Map<String, ItemTabelaSimbolo> itens =  geradorTabelaSimbolo.processarTokens(listaDeTokens, listaCanga);
 
         for (ItemTabelaSimbolo item : itens.values()) {
             System.out.println(item);
