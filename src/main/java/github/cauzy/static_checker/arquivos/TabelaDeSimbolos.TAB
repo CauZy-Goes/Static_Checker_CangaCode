@@ -1,0 +1,36 @@
+Código da Equipe: EQ01
+Componentes:
+    CAUÃ GOES FARIAS; caua.farias@ucsal.edu.br; 71993209370;
+    GUILHERME ANDRADE DE LACERDA; guilhermeandrade.lacerda@ucsal.edu.br; 71988602565;
+    KAILAN DE SOUZA DIAS; kailan.dias@ucsal.edu.br; 75988059380;
+
+RELATÓRIO DA ANÁLISE LÉXICA. Texto fonte analisado: input.251
+
+Entrada: 1, Codigo: IDE, Lexeme: matricula,
+QtdCharAntesTrunc: 9, QtdCharDepoisTrunc: 9,
+TipoSimb: IN, Linhas: [6, 21, 29, 43].
+-------------------------------------------------------------
+Entrada: 2, Codigo: IDE, Lexeme: nome,
+QtdCharAntesTrunc: 4, QtdCharDepoisTrunc: 4,
+TipoSimb: ST, Linhas: [7, 22, 30, 43].
+-------------------------------------------------------------
+Entrada: 3, Codigo: IDE, Lexeme: genero,
+QtdCharAntesTrunc: 6, QtdCharDepoisTrunc: 6,
+TipoSimb: CH, Linhas: [8, 31].
+-------------------------------------------------------------
+Entrada: 4, Codigo: IDE, Lexeme: nota1,
+QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
+TipoSimb: RE, Linhas: [9, 16, 32, 35].
+-------------------------------------------------------------
+Entrada: 5, Codigo: IDE, Lexeme: nota2,
+QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
+TipoSimb: RE, Linhas: [10, 17, 33, 35].
+-------------------------------------------------------------
+Entrada: 6, Codigo: IDE, Lexeme: aprovado,
+QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
+TipoSimb: BO, Linhas: [11, 24, 38, 40, 43].
+-------------------------------------------------------------
+Entrada: 7, Codigo: IDE, Lexeme: media,
+QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
+TipoSimb: RE, Linhas: [23, 35, 37, 43].
+-------------------------------------------------------------

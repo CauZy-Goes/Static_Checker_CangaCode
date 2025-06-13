@@ -1,10 +1,12 @@
 package github.cauzy.static_checker.partesDoCompilador;
 
 import github.cauzy.static_checker.entidadesDoCompilador.AtomoCangaCode;
+import github.cauzy.static_checker.entidadesDoCompilador.ItemTabelaSimbolo;
 import github.cauzy.static_checker.entidadesDoCompilador.Token;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AnalisadorSintatico {
 
@@ -33,6 +35,18 @@ public class AnalisadorSintatico {
 
         GeradorDeArquivoLEX geradorDeArquivoLEX = new GeradorDeArquivoLEX("EQ01", componentes, "input.251");
         geradorDeArquivoLEX.gerarArquivoLEX(listaDeTokens);
+
+        GeradorTabelaSimbolo geradorTabelaSimbolo = new GeradorTabelaSimbolo();
+        GeradorDeArquivoTAB geradorDeArquivoTAB = new GeradorDeArquivoTAB("EQ01", componentes, "input.251");
+
+        Map<String, ItemTabelaSimbolo> itens =  geradorTabelaSimbolo.processarLinhas(linhas);
+
+        for (ItemTabelaSimbolo item : itens.values()) {
+            System.out.println(item);
+        }
+
+        geradorDeArquivoTAB.gerarArquivoTAB(itens);
+
     }
 
     public static List<AtomoCangaCode> preencherListaCanga() {

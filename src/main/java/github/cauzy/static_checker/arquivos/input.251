@@ -1,33 +1,44 @@
-// Exemplo para testar repetição de identificadores
+// Exemplo complexo para testes léxicos
 
-program SistemaCadastro
+program SistemaAcademico
 
 declarations
-    integer idade
-    real altura
+    integer matricula
     string nome
-    boolean ativo
+    char genero
+    real nota1
+    real nota2
+    boolean aprovado
 endDeclarations
 
 functions
-funcType calcularIMC
-    real peso
-    real altura
+funcType calcularMedia
+    real nota1
+    real nota2
 endFuncType
 
-funcType exibirUsuario
+funcType exibirAluno
+    integer matricula
     string nome
-    integer idade
-    boolean ativo
+    real media
+    boolean aprovado
 endFuncType
 endFunctions
 
 start
-    idade = 30
-    altura = 1.82
-    nome = "Carlos"
-    ativo = true
+    matricula = 20231001
+    nome = "Ana Beatriz"
+    genero = 'F'
+    nota1 = 8.5
+    nota2 = 9.3
 
-    calcularIMC(80.5, altura)
-    exibirUsuario(nome, idade, ativo)
+    media = calcularMedia(nota1, nota2)
+
+    if media >= 7.0 then
+        aprovado = true
+    else
+        aprovado = false
+    endif
+
+    exibirAluno(matricula, nome, media, aprovado)
 endProgram
