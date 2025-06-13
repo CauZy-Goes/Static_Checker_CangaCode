@@ -1,37 +1,33 @@
-program MainProgram : // testandooooo
+// Exemplo para testar repetição de identificadores
+
+program SistemaCadastro
 
 declarations
-    integer idade ;
-    boolean isAtivo ;
+    integer idade
+    real altura
+    string nome
+    boolean ativo
 endDeclarations
 
-PIROADASDASDAS // <- isso deve ser rejeitado (inválido)
-
 functions
-    funcType calcularIdade :
-    declarations
-        integer anos ;
-    endDeclarations
+funcType calcularIMC
+    real peso
+    real altura
+endFuncType
 
-    if idade > 0 :
-        idade := idade + 1 ;
-    else :
-        idade := 0 ;
-    endIf
-
-    return idade ;
-endFunction
+funcType exibirUsuario
+    string nome
+    integer idade
+    boolean ativo
+endFuncType
 endFunctions
 
-idade := 10 ;
-isAtivo := true ;
+start
+    idade = 30
+    altura = 1.82
+    nome = "Carlos"
+    ativo = true
 
-while idade > 0 :
-    idade := idade - 1 ;
-    if idade <= 0 :
-        isAtivo := false ;
-    endIf
-endWhile
-
-print idade ;
+    calcularIMC(80.5, altura)
+    exibirUsuario(nome, idade, ativo)
 endProgram
