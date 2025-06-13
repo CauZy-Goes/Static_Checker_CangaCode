@@ -17,7 +17,12 @@ public class GeradorDeArquivoLEX {
     private final String nomeTextoFonteAnalisado;
 
     public void gerarArquivoLEX(List<Token> tokens) {
-        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/RelatorioLexico.LEX";
+
+        String nomeTextoFonteAnalisadoFormatado = nomeTextoFonteAnalisado.contains(".")
+                ? nomeTextoFonteAnalisado.substring(0, nomeTextoFonteAnalisado.lastIndexOf('.'))
+                : nomeTextoFonteAnalisado;
+
+        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/" + nomeTextoFonteAnalisadoFormatado + ".LEX";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
 

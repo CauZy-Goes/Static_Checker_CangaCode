@@ -19,7 +19,11 @@ public class GeradorDeArquivoTAB {
     private final String nomeTextoFonteAnalisado;
 
     public void gerarArquivoTAB(Map<String, ItemTabelaSimbolo> itens) {
-        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/TabelaDeSimbolos.TAB";
+        String nomeTextoFonteAnalisadoFormatado = nomeTextoFonteAnalisado.contains(".")
+                ? nomeTextoFonteAnalisado.substring(0, nomeTextoFonteAnalisado.lastIndexOf('.'))
+                : nomeTextoFonteAnalisado;
+
+        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/" + nomeTextoFonteAnalisadoFormatado + ".TAB";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
 
