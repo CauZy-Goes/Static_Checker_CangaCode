@@ -1,44 +1,47 @@
-// Exemplo complexo para testes léxicos
-
-program SistemaAcademico
+program TesteErrosEdgeCases
 
 declarations
-    integer matriculaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooo
-    string nome
-    char genero
-    real nota1
-    real nota2
-    boolean aprovado
+    integer contador
+    real valor
+    string mensagem
 endDeclarations
 
 functions
-funcType calcularMedia
-    real nota1
-    real nota2
-endFuncType
-
-funcType exibirAluno
-    integer matricula
-    string nome
-    real media
-    boolean aprovado
+funcType exemploFunc
+    real valor
 endFuncType
 endFunctions
 
+exemploFunc
+
 start
-    matricula := 20231001
-    nome := "Ana Beatrizasdddddddddddddd123456789123456789123456789"
-    genero := 'F'
-    nota1 := 8123131241414131231414141414456456567568679675435252.5
-    nota2 := 9
+    // Teste de identificadores repetidos nas linhas 12, 13 e 14
+    contador := 10
+    contador := contador + 1
+    contador := contador * 2
 
-    media = calcularMedia(nota1, nota2)
+    // Teste de comentário ignorado pelo léxico
+    // Este é um comentário de linha e deve ser ignorado
 
-    if media >= 7.0 then
-        aprovado = true
-    else
-        aprovado = false
-    endif
+    /* Teste de comentário de bloco
+       Se a linguagem suportar isso, o léxico deve ignorar tudo aqui
+    */
 
-    exibirAluno(matricula, nome, media, aprovado)
+    mensagem := "Texto com \"aspas\" internas"
+
+    // Número inválido (ponto duplo)
+    valor := 123..456
+
+    // Número inválido (vários pontos flutuantes)
+    valor := 123.456.789
+
+    // Caracteres inválidos
+    contador := §
+    contador := €
+
+    // Símbolo inesperado
+    contador @= 5
+
+exemploFunc
+
 endProgram

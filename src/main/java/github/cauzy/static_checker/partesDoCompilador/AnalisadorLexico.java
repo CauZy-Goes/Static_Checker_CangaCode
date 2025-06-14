@@ -69,53 +69,6 @@ import java.util.*;
             return resultado;
         }
 
-    public String[] limparCaracteresInválidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
-        String[] resultado = new String[linhas.length];
-
-        for (int i = 0; i < linhas.length; i++) {
-            String linha = linhas[i];
-            List<String> lexemas = separarLexemas(linha);
-            StringBuilder linhaFiltrada = new StringBuilder();
-            String anterior = "";
-
-            for (String lexeme : lexemas) {
-                if (lexeme.isBlank()) continue;
-
-                atualizarContexto(anterior);
-
-                // Primeiro tenta encontrar o lexema no vocabulário oficial
-                Optional<AtomoCangaCode> reservado = listaCanga.stream()
-                        .filter(a -> a.lexeme().equals(lexeme))
-                        .findFirst();
-
-                AtomoCangaCode atomo;
-
-                if (reservado.isPresent()) {
-                    atomo = reservado.get();
-                } else {
-                    atomo = classificarIdentificador(lexeme);
-                }
-
-                // Só inclui lexemas válidos (ignorando AIN02)
-                if (atomo != null && !atomo.codigo().equals("AIN02")) {
-                    linhaFiltrada.append(lexeme).append(" ");
-                }
-
-                anterior = lexeme;
-            }
-
-            resultado[i] = linhaFiltrada.toString().trim();
-
-            // Limpa contexto se necessário
-            if (contextoConsumido) {
-                contexto = "";
-                contextoConsumido = false;
-            }
-        }
-
-        return resultado;
-    }
-
 
     public List<Token> capturarTokensValidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
         List<Token> tokens = new ArrayList<>();
@@ -140,7 +93,7 @@ import java.util.*;
                 if (reservado.isPresent()) {
                     atomo = reservado.get();
                 } else {
-                    atomo = classificarIdentificador(lexeme);
+                    atomo = classificarIdentificador(lexeme, tokens);
                     if (atomo == null || atomo.codigo().equals("AIN02")) {
                         anterior = lexeme;
                         continue;
@@ -252,35 +205,58 @@ import java.util.*;
         return lexemas;
     }
 
-    private AtomoCangaCode classificarIdentificador(String lexeme) {
-        if (lexeme.matches("[0-9]+")) return new AtomoCangaCode(lexeme, "IDN04"); // intConst
-        if (lexeme.matches("[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?")) return new AtomoCangaCode(lexeme, "IDN05"); // realConst
-        if (lexeme.matches("\".*\"")) return new AtomoCangaCode(lexeme, "IDN06"); // stringConst
-        if (lexeme.matches("'[a-z]'")) return new AtomoCangaCode(lexeme, "IDN07"); // charConst
+    private AtomoCangaCode classificarIdentificador(String lexeme, List<Token> tokensAnteriores) {
+        // Constantes
+        boolean jaDeclaradoNaTabela = tabelaSimbolos.containsKey(lexeme);
 
+        // 1) Se estiver em contexto de declaração, adiciona como novo identificador
         switch (contexto) {
             case "programName":
                 if (!contextoConsumido && lexeme.matches("[a-zA-Z][a-zA-Z0-9]*")) {
                     contextoConsumido = true;
+                    getIndiceTabelaSimbolo(lexeme);  // Garantir que entre na tabela
                     return new AtomoCangaCode(lexeme, "IDN01");
                 }
                 break;
             case "functionName":
                 if (!contextoConsumido && lexeme.matches("[a-zA-Z][a-zA-Z0-9]*")) {
                     contextoConsumido = true;
+                    getIndiceTabelaSimbolo(lexeme);
                     return new AtomoCangaCode(lexeme, "IDN03");
                 }
                 break;
             case "variable":
                 if (!contextoConsumido && lexeme.matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
                     contextoConsumido = true;
+                    getIndiceTabelaSimbolo(lexeme);
                     return new AtomoCangaCode(lexeme, "IDN02");
                 }
                 break;
         }
 
+        // 2) Se fora de contexto de declaração, verifica se já existe na tabela de símbolos
+        if (jaDeclaradoNaTabela) {
+            // Buscar qual código usar: Olha na lista de tokens já capturados
+            Optional<Token> tokenAnterior = tokensAnteriores.stream()
+                    .filter(t -> t.atomoCangaCode().lexeme().equals(lexeme))
+                    .findFirst();
+
+            if (tokenAnterior.isPresent()) {
+                String codigoExistente = tokenAnterior.get().atomoCangaCode().codigo();
+                return new AtomoCangaCode(lexeme, codigoExistente);
+            }
+        }
+
+        // 3) Caso especial: constantes numéricas e strings
+        if (lexeme.matches("[0-9]+")) return new AtomoCangaCode(lexeme, "IDN04"); // intConst
+        if (lexeme.matches("[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?")) return new AtomoCangaCode(lexeme, "IDN05"); // realConst
+        if (lexeme.matches("\".*\"")) return new AtomoCangaCode(lexeme, "IDN06"); // stringConst
+        if (lexeme.matches("'[a-z]'")) return new AtomoCangaCode(lexeme, "IDN07"); // charConst
+
+        // 4) Se não for nada disso, é inválido
         return new AtomoCangaCode(lexeme, "AIN02");
     }
+
 
     private int getIndiceTabelaSimbolo(String lexeme) {
         if (!tabelaSimbolos.containsKey(lexeme)) {

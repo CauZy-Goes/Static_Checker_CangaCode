@@ -6,63 +6,43 @@ Componentes:
 
 RELATÓRIO DA ANÁLISE LÉXICA. Texto fonte analisado: input.251
 
-Entrada: 1, Codigo: IDN01, Lexeme: SistemaAcademico,
-QtdCharAntesTrunc: 16, QtdCharDepoisTrunc: 16,
-TipoSimb: VD, Linhas: [3].
+Entrada: 1, Codigo: IDN01, Lexeme: TesteErrosEdgeCases,
+QtdCharAntesTrunc: 19, QtdCharDepoisTrunc: 19,
+TipoSimb: VD, Linhas: [1].
 -------------------------------------------------------------
-Entrada: 2, Codigo: IDN02, Lexeme: matriculaaaaaaaaaaaaaaaaaaaoooooooo,
-QtdCharAntesTrunc: 55, QtdCharDepoisTrunc: 35,
-TipoSimb: IN, Linhas: [6].
--------------------------------------------------------------
-Entrada: 3, Codigo: IDN02, Lexeme: nome,
-QtdCharAntesTrunc: 4, QtdCharDepoisTrunc: 4,
-TipoSimb: ST, Linhas: [7, 22].
--------------------------------------------------------------
-Entrada: 4, Codigo: IDN02, Lexeme: nota1,
-QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
-TipoSimb: FP, Linhas: [9, 16].
--------------------------------------------------------------
-Entrada: 5, Codigo: IDN02, Lexeme: nota2,
-QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
-TipoSimb: FP, Linhas: [10, 17].
--------------------------------------------------------------
-Entrada: 6, Codigo: IDN02, Lexeme: aprovado,
+Entrada: 2, Codigo: IDN02, Lexeme: contador,
 QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
-TipoSimb: BL, Linhas: [11, 24].
+TipoSimb: IN, Linhas: [4, 19, 20, 21, 39].
 -------------------------------------------------------------
-Entrada: 7, Codigo: IDN03, Lexeme: calcularMedia,
-QtdCharAntesTrunc: 13, QtdCharDepoisTrunc: 13,
-TipoSimb: VD, Linhas: [15].
+Entrada: 3, Codigo: IDN02, Lexeme: valor,
+QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
+TipoSimb: FP, Linhas: [5, 11, 33, 36].
 -------------------------------------------------------------
-Entrada: 8, Codigo: IDN03, Lexeme: exibirAluno,
+Entrada: 4, Codigo: IDN02, Lexeme: mensagem,
+QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
+TipoSimb: ST, Linhas: [6, 30].
+-------------------------------------------------------------
+Entrada: 5, Codigo: IDN03, Lexeme: exemploFunc,
 QtdCharAntesTrunc: 11, QtdCharDepoisTrunc: 11,
-TipoSimb: VD, Linhas: [20].
+TipoSimb: VD, Linhas: [10, 15, 45].
 -------------------------------------------------------------
-Entrada: 9, Codigo: IDN02, Lexeme: matricula,
-QtdCharAntesTrunc: 9, QtdCharDepoisTrunc: 9,
+Entrada: 6, Codigo: IDN04, Lexeme: 10,
+QtdCharAntesTrunc: 2, QtdCharDepoisTrunc: 2,
+TipoSimb: IN, Linhas: [19].
+-------------------------------------------------------------
+Entrada: 7, Codigo: IDN04, Lexeme: 1,
+QtdCharAntesTrunc: 1, QtdCharDepoisTrunc: 1,
+TipoSimb: IN, Linhas: [20].
+-------------------------------------------------------------
+Entrada: 8, Codigo: IDN04, Lexeme: 2,
+QtdCharAntesTrunc: 1, QtdCharDepoisTrunc: 1,
 TipoSimb: IN, Linhas: [21].
 -------------------------------------------------------------
-Entrada: 10, Codigo: IDN02, Lexeme: media,
-QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
-TipoSimb: FP, Linhas: [23].
--------------------------------------------------------------
-Entrada: 11, Codigo: IDN04, Lexeme: 20231001,
-QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
-TipoSimb: IN, Linhas: [29].
--------------------------------------------------------------
-Entrada: 12, Codigo: IDN06, Lexeme: "Ana Beatrizasdddddddddddddd123456",
-QtdCharAntesTrunc: 56, QtdCharDepoisTrunc: 35,
+Entrada: 9, Codigo: IDN06, Lexeme: "Texto com \",
+QtdCharAntesTrunc: 13, QtdCharDepoisTrunc: 13,
 TipoSimb: ST, Linhas: [30].
 -------------------------------------------------------------
-Entrada: 13, Codigo: IDN05, Lexeme: 81231312414141312314141414144564565,
-QtdCharAntesTrunc: 54, QtdCharDepoisTrunc: 35,
-TipoSimb: IN, Linhas: [32].
--------------------------------------------------------------
-Entrada: 14, Codigo: IDN04, Lexeme: 9,
+Entrada: 10, Codigo: IDN04, Lexeme: 5,
 QtdCharAntesTrunc: 1, QtdCharDepoisTrunc: 1,
-TipoSimb: IN, Linhas: [33].
--------------------------------------------------------------
-Entrada: 15, Codigo: IDN05, Lexeme: 7.0,
-QtdCharAntesTrunc: 3, QtdCharDepoisTrunc: 3,
-TipoSimb: FP, Linhas: [37].
+TipoSimb: IN, Linhas: [43].
 -------------------------------------------------------------
