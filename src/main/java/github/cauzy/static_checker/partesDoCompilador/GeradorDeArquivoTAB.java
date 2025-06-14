@@ -6,6 +6,7 @@ import github.cauzy.static_checker.entidadesDoCompilador.Token;
 import lombok.Data;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +24,11 @@ public class GeradorDeArquivoTAB {
                 ? nomeTextoFonteAnalisado.substring(0, nomeTextoFonteAnalisado.lastIndexOf('.'))
                 : nomeTextoFonteAnalisado;
 
-        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/" + nomeTextoFonteAnalisadoFormatado + ".TAB";
+        File outputDir = new File("output");
+        if (!outputDir.exists()) outputDir.mkdirs();
+
+        String caminho = "output/" + nomeTextoFonteAnalisadoFormatado + ".TAB";
+
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
 
@@ -34,7 +39,7 @@ public class GeradorDeArquivoTAB {
                 writer.write("    " + componente + ";\n");
             }
 
-            writer.write("\nRELATÓRIO DA ANÁLISE LÉXICA. Texto fonte analisado: " + nomeTextoFonteAnalisado + "\n\n");
+            writer.write("\nRELATÓRIO DA TABELA DE SÍMBOLOS. Texto fonte analisado: " + nomeTextoFonteAnalisado + "\n\n");
 
             for (ItemTabelaSimbolo item : itens.values()) {
                 writer.write(String.format("Entrada: %d, Codigo: %s, Lexeme: %s,\n",

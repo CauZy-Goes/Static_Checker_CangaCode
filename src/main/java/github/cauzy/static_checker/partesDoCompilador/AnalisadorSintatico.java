@@ -13,7 +13,14 @@ public class AnalisadorSintatico {
     public static void main(String[] args) {
         List<AtomoCangaCode> listaCanga = preencherListaCanga();
 
-        String caminhoDoArquivo = "src\\main\\java\\github\\cauzy\\static_checker\\arquivos\\input.251";
+        String caminhoDoArquivo;
+        if (args.length > 0) {
+            caminhoDoArquivo = args[0];
+        } else {
+            System.err.println("Nenhum arquivo de entrada foi especificado.");
+            return;
+        }
+
 
         Buffer buffer251 = new Buffer();
 

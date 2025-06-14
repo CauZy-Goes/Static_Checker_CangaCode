@@ -5,6 +5,7 @@ import github.cauzy.static_checker.entidadesDoCompilador.Token;
 import lombok.Data;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +23,11 @@ public class GeradorDeArquivoLEX {
                 ? nomeTextoFonteAnalisado.substring(0, nomeTextoFonteAnalisado.lastIndexOf('.'))
                 : nomeTextoFonteAnalisado;
 
-        String caminho = "src/main/java/github/cauzy/static_checker/arquivos/" + nomeTextoFonteAnalisadoFormatado + ".LEX";
+        File outputDir = new File("output");
+        if (!outputDir.exists()) outputDir.mkdirs();
+
+        String caminho = "output/" + nomeTextoFonteAnalisadoFormatado + ".LEX";
+
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
 
