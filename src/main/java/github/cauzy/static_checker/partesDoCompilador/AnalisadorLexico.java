@@ -249,9 +249,10 @@ import java.util.*;
 
         // 3) Caso especial: constantes numéricas e strings
         if (lexeme.matches("[0-9]+")) return new AtomoCangaCode(lexeme, "IDN04"); // intConst
-        if (lexeme.matches("[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?")) return new AtomoCangaCode(lexeme, "IDN05"); // realConst
-        if (lexeme.matches("\".*\"")) return new AtomoCangaCode(lexeme, "IDN06"); // stringConst
+        if (lexeme.matches("[0-9]+\\.[0-9]+(e[+-]?[0-9]+)?")) return new AtomoCangaCode(lexeme, "IDN05"); // realConst
+        if (lexeme.matches("\"[a-zA-Z0-9 $. _]*\"")) return new AtomoCangaCode(lexeme, "IDN06"); // stringConst
         if (lexeme.matches("'[a-z]'")) return new AtomoCangaCode(lexeme, "IDN07"); // charConst
+
 
         // 4) Se não for nada disso, é inválido
         return new AtomoCangaCode(lexeme, "AIN02");

@@ -38,6 +38,14 @@ start
     // Caracteres inválidos
     contador := §
     contador := €
+    "@"
+    't'
+    12312312
+    -1231
+    123123.3213
+    -123123.123123
+    123123+13412312-123123
+    123123_3131232
 
     // Símbolo inesperado
     contador @= 5

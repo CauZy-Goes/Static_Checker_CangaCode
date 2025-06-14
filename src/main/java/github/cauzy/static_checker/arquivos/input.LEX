@@ -38,7 +38,6 @@ Lexeme: *                                   Código: SRS14   ÍndiceTabSimb: -  
 Lexeme: 2                                   Código: IDN04   ÍndiceTabSimb: 8   Linha: 21.
 Lexeme: mensagem                            Código: IDN02   ÍndiceTabSimb: 4   Linha: 30.
 Lexeme: :=                                  Código: SRS04   ÍndiceTabSimb: -   Linha: 30.
-Lexeme: "Texto com \"                       Código: IDN06   ÍndiceTabSimb: 9   Linha: 30.
 Lexeme: valor                               Código: IDN02   ÍndiceTabSimb: 3   Linha: 33.
 Lexeme: :=                                  Código: SRS04   ÍndiceTabSimb: -   Linha: 33.
 Lexeme: valor                               Código: IDN02   ÍndiceTabSimb: 3   Linha: 36.
@@ -47,7 +46,19 @@ Lexeme: contador                            Código: IDN02   ÍndiceTabSimb: 2  
 Lexeme: :=                                  Código: SRS04   ÍndiceTabSimb: -   Linha: 39.
 Lexeme: contador                            Código: IDN02   ÍndiceTabSimb: 2   Linha: 40.
 Lexeme: :=                                  Código: SRS04   ÍndiceTabSimb: -   Linha: 40.
-Lexeme: contador                            Código: IDN02   ÍndiceTabSimb: 2   Linha: 43.
-Lexeme: 5                                   Código: IDN04   ÍndiceTabSimb: 10  Linha: 43.
-Lexeme: exemploFunc                         Código: IDN03   ÍndiceTabSimb: 5   Linha: 45.
-Lexeme: endProgram                          Código: PRS15   ÍndiceTabSimb: -   Linha: 47.
+Lexeme: 't'                                 Código: IDN07   ÍndiceTabSimb: 9   Linha: 42.
+Lexeme: 12312312                            Código: IDN04   ÍndiceTabSimb: 10  Linha: 43.
+Lexeme: -                                   Código: SRS13   ÍndiceTabSimb: -   Linha: 44.
+Lexeme: 1231                                Código: IDN04   ÍndiceTabSimb: 11  Linha: 44.
+Lexeme: 123123.3213                         Código: IDN05   ÍndiceTabSimb: 12  Linha: 45.
+Lexeme: -                                   Código: SRS13   ÍndiceTabSimb: -   Linha: 46.
+Lexeme: 123123.123123                       Código: IDN05   ÍndiceTabSimb: 13  Linha: 46.
+Lexeme: 123123                              Código: IDN04   ÍndiceTabSimb: 14  Linha: 47.
+Lexeme: +                                   Código: SRS12   ÍndiceTabSimb: -   Linha: 47.
+Lexeme: 13412312                            Código: IDN04   ÍndiceTabSimb: 15  Linha: 47.
+Lexeme: -                                   Código: SRS13   ÍndiceTabSimb: -   Linha: 47.
+Lexeme: 123123                              Código: IDN04   ÍndiceTabSimb: 14  Linha: 47.
+Lexeme: contador                            Código: IDN02   ÍndiceTabSimb: 2   Linha: 51.
+Lexeme: 5                                   Código: IDN04   ÍndiceTabSimb: 16  Linha: 51.
+Lexeme: exemploFunc                         Código: IDN03   ÍndiceTabSimb: 5   Linha: 53.
+Lexeme: endProgram                          Código: PRS15   ÍndiceTabSimb: -   Linha: 55.
