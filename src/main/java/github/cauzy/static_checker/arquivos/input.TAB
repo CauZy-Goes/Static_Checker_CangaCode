@@ -50,13 +50,13 @@ Entrada: 11, Codigo: IDN04, Lexeme: 20231001,
 QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
 TipoSimb: IN, Linhas: [29].
 -------------------------------------------------------------
-Entrada: 12, Codigo: IDN06, Lexeme: "Ana Beatrizasdddddddddddddddddddd",
-QtdCharAntesTrunc: 71, QtdCharDepoisTrunc: 35,
+Entrada: 12, Codigo: IDN06, Lexeme: "Ana Beatrizasdddddddddddddd123456",
+QtdCharAntesTrunc: 56, QtdCharDepoisTrunc: 35,
 TipoSimb: ST, Linhas: [30].
 -------------------------------------------------------------
-Entrada: 13, Codigo: IDN05, Lexeme: 80000000000000000000000000000000000,
-QtdCharAntesTrunc: 62, QtdCharDepoisTrunc: 35,
-TipoSimb: FP, Linhas: [32].
+Entrada: 13, Codigo: IDN05, Lexeme: 81231312414141312314141414144564565,
+QtdCharAntesTrunc: 54, QtdCharDepoisTrunc: 35,
+TipoSimb: IN, Linhas: [32].
 -------------------------------------------------------------
 Entrada: 14, Codigo: IDN04, Lexeme: 9,
 QtdCharAntesTrunc: 1, QtdCharDepoisTrunc: 1,

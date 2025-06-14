@@ -38,14 +38,29 @@ public class GeradorDeArquivoLEX {
             // Tokens
             for (Token token : tokens) {
                 AtomoCangaCode atomo = token.atomoCangaCode();
-                String lexeme = atomo.lexeme();
+                String lexemeOriginal = atomo.lexeme();
                 String codigo = atomo.codigo();
                 String indice = token.indiceTabelaSimbolo() == null ? "-" : token.indiceTabelaSimbolo().toString();
                 String linha = token.linha().toString();
 
-                writer.write(String.format("Lexeme: %-17s Código: %-7s ÍndiceTabSimb: %-3s Linha: %s.\n",
-                        lexeme, codigo, indice, linha));
+                String lexemeExibicao;
+
+                if (lexemeOriginal.length() > 35) {
+                    if (lexemeOriginal.startsWith("\"")) {
+                        // Lexeme é uma string → Truncar e colocar uma aspas de fechamento
+                        lexemeExibicao = lexemeOriginal.substring(0, 34) + "\"";
+                    } else {
+                        // Qualquer outro lexema → Só trunca puro
+                        lexemeExibicao = lexemeOriginal.substring(0, 35);
+                    }
+                } else {
+                    lexemeExibicao = lexemeOriginal;
+                }
+
+                writer.write(String.format("Lexeme: %-35s Código: %-7s ÍndiceTabSimb: %-3s Linha: %s.\n",
+                        lexemeExibicao, codigo, indice, linha));
             }
+
 
         } catch (IOException e) {
             System.err.println("Erro ao gerar o arquivo LEX: " + e.getMessage());

@@ -16,20 +16,17 @@ public class GeradorTabelaSimbolo {
         for (Token token : tokens) {
             String codigoAtomo = token.atomoCangaCode().codigo();
 
-            // Só processa identificadores
             if (codigoAtomo.startsWith("IDN")) {
                 String lexemaOriginal = token.atomoCangaCode().lexeme();
                 int linha = token.linha();
 
-                // Truncagem só para armazenamento (depois da classificação)
+                // Determinar tipo simbólico correto (corrigindo o problema do ponto voador)
                 String lexemaTruncado = aplicarTruncagem(lexemaOriginal, codigoAtomo);
 
+                String tipoSimbolo = determinarTipoSimboloCorrigido(lexemaTruncado, codigoAtomo);
                 int tamAntes = lexemaOriginal.length();
                 int tamDepois = lexemaTruncado.length();
 
-                String tipoSimbolo = determinarTipoSimbolo(codigoAtomo);
-
-                // Chave baseada no lexema original + código para garantir unicidade real
                 String chave = lexemaOriginal + "-" + codigoAtomo;
 
                 if (!tabela.containsKey(chave)) {
@@ -60,18 +57,34 @@ public class GeradorTabelaSimbolo {
     private String aplicarTruncagem(String lexema, String codigoAtomo) {
         int tamAntes = lexema.length();
 
-        // Se for String (IDN06) ou Char (IDN07), incluir as aspas no limite dos 35 caracteres
         if (codigoAtomo.equals("IDN06") || codigoAtomo.equals("IDN07")) {
             if (tamAntes > 35) {
-                // Mantém a primeira aspas, corta o conteúdo e mantém a última aspas dentro dos 35
                 return lexema.substring(0, 34) + "\"";
             } else {
                 return lexema;
             }
         } else {
-            // Demais tipos: só cortar puro
             return tamAntes > 35 ? lexema.substring(0, 35) : lexema;
         }
+    }
+
+    private String determinarTipoSimboloCorrigido(String lexemaOriginal, String codigoAtomoLido) {
+        return switch (codigoAtomoLido) {
+            case "IDN01" -> "VD";  // Nome de programa
+            case "IDN02" -> "-";   // Variável
+            case "IDN03" -> "VD";  // Função
+            case "IDN04", "IDN05" -> {
+                // Para literais numéricos, decidir com base no lexema original
+                if (lexemaOriginal.contains(".")) {
+                    yield "FP";
+                } else {
+                    yield "IN";
+                }
+            }
+            case "IDN06" -> "ST";  // String
+            case "IDN07" -> "CH";  // Char
+            default -> "-";
+        };
     }
 
     public void preencherTiposDasVariaveis(List<Token> tokens) {
@@ -81,7 +94,6 @@ public class GeradorTabelaSimbolo {
             String codigo = token.atomoCangaCode().codigo();
             String lexema = token.atomoCangaCode().lexeme();
 
-            // Verificar se é declaração de tipo
             switch (lexema) {
                 case "integer" -> tipoAtual = "IN";
                 case "string" -> tipoAtual = "ST";
@@ -91,7 +103,6 @@ public class GeradorTabelaSimbolo {
                 default -> {
                     if (tipoAtual != null && codigo.equals("IDN02")) {
                         for (ItemTabelaSimbolo item : tabela.values()) {
-                            // Compare pelo lexema original (chave da tabela)
                             if (item.getLexema().equals(aplicarTruncagem(lexema, codigo)) && item.getCodigo().equals(codigo)) {
                                 item.setTipo(tipoAtual);
                             }
@@ -104,19 +115,6 @@ public class GeradorTabelaSimbolo {
                 }
             }
         }
-    }
-
-    private String determinarTipoSimbolo(String codigoAtomo) {
-        return switch (codigoAtomo) {
-            case "IDN01" -> "VD";  // Nome de programa
-            case "IDN02" -> "-";   // Variáveis (preenchido depois)
-            case "IDN03" -> "VD";  // Nome de função
-            case "IDN04" -> "IN";  // Integer
-            case "IDN05" -> "FP";  // Floating Point
-            case "IDN06" -> "ST";  // String
-            case "IDN07" -> "CH";  // Char
-            default -> "-";        // Qualquer outro
-        };
     }
 
     public void imprimir() {

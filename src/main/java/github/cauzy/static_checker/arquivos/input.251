@@ -27,9 +27,9 @@ endFunctions
 
 start
     matricula := 20231001
-    nome := "Ana Beatrizasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    nome := "Ana Beatrizasdddddddddddddd123456789123456789123456789"
     genero := 'F'
-    nota1 := 800000000000000000000000000000000000000000000000000000000000.5
+    nota1 := 8123131241414131231414141414456456567568679675435252.5
     nota2 := 9
 
     media = calcularMedia(nota1, nota2)
