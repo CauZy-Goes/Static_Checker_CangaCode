@@ -10,7 +10,7 @@ Lexeme: program           Código: PRS14   ÍndiceTabSimb: -   Linha: 3.
 Lexeme: SistemaAcademico  Código: IDN01   ÍndiceTabSimb: 1   Linha: 3.
 Lexeme: declarations      Código: PRS12   ÍndiceTabSimb: -   Linha: 5.
 Lexeme: integer           Código: PRS01   ÍndiceTabSimb: -   Linha: 6.
-Lexeme: matricula         Código: IDN02   ÍndiceTabSimb: 2   Linha: 6.
+Lexeme: matriculaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooo Código: IDN02   ÍndiceTabSimb: 2   Linha: 6.
 Lexeme: string            Código: PRS04   ÍndiceTabSimb: -   Linha: 7.
 Lexeme: nome              Código: IDN02   ÍndiceTabSimb: 3   Linha: 7.
 Lexeme: real              Código: PRS02   ÍndiceTabSimb: -   Linha: 9.
@@ -30,24 +30,29 @@ Lexeme: nota2             Código: IDN02   ÍndiceTabSimb: 5   Linha: 17.
 Lexeme: funcType          Código: PRS10   ÍndiceTabSimb: -   Linha: 20.
 Lexeme: exibirAluno       Código: IDN03   ÍndiceTabSimb: 8   Linha: 20.
 Lexeme: integer           Código: PRS01   ÍndiceTabSimb: -   Linha: 21.
-Lexeme: matricula         Código: IDN02   ÍndiceTabSimb: 2   Linha: 21.
+Lexeme: matricula         Código: IDN02   ÍndiceTabSimb: 9   Linha: 21.
 Lexeme: string            Código: PRS04   ÍndiceTabSimb: -   Linha: 22.
 Lexeme: nome              Código: IDN02   ÍndiceTabSimb: 3   Linha: 22.
 Lexeme: real              Código: PRS02   ÍndiceTabSimb: -   Linha: 23.
-Lexeme: media             Código: IDN02   ÍndiceTabSimb: 9   Linha: 23.
+Lexeme: media             Código: IDN02   ÍndiceTabSimb: 10  Linha: 23.
 Lexeme: boolean           Código: PRS05   ÍndiceTabSimb: -   Linha: 24.
 Lexeme: aprovado          Código: IDN02   ÍndiceTabSimb: 6   Linha: 24.
 Lexeme: endFunctions      Código: PRS17   ÍndiceTabSimb: -   Linha: 26.
-Lexeme: 20231001          Código: IDN04   ÍndiceTabSimb: 10  Linha: 29.
-Lexeme: "Ana Beatriz"     Código: IDN06   ÍndiceTabSimb: 11  Linha: 30.
-Lexeme: 8.5               Código: IDN05   ÍndiceTabSimb: 12  Linha: 32.
-Lexeme: 9.3               Código: IDN05   ÍndiceTabSimb: 13  Linha: 33.
+Lexeme: :=                Código: SRS04   ÍndiceTabSimb: -   Linha: 29.
+Lexeme: 20231001          Código: IDN04   ÍndiceTabSimb: 11  Linha: 29.
+Lexeme: :=                Código: SRS04   ÍndiceTabSimb: -   Linha: 30.
+Lexeme: "Ana Beatrizasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd" Código: IDN06   ÍndiceTabSimb: 12  Linha: 30.
+Lexeme: :=                Código: SRS04   ÍndiceTabSimb: -   Linha: 31.
+Lexeme: :=                Código: SRS04   ÍndiceTabSimb: -   Linha: 32.
+Lexeme: 800000000000000000000000000000000000000000000000000000000000.5 Código: IDN05   ÍndiceTabSimb: 13  Linha: 32.
+Lexeme: :=                Código: SRS04   ÍndiceTabSimb: -   Linha: 33.
+Lexeme: 9                 Código: IDN04   ÍndiceTabSimb: 14  Linha: 33.
 Lexeme: (                 Código: SRS06   ÍndiceTabSimb: -   Linha: 35.
 Lexeme: ,                 Código: SRS02   ÍndiceTabSimb: -   Linha: 35.
 Lexeme: )                 Código: SRS07   ÍndiceTabSimb: -   Linha: 35.
 Lexeme: if                Código: PRS20   ÍndiceTabSimb: -   Linha: 37.
 Lexeme: >=                Código: SRS22   ÍndiceTabSimb: -   Linha: 37.
-Lexeme: 7.0               Código: IDN05   ÍndiceTabSimb: 14  Linha: 37.
+Lexeme: 7.0               Código: IDN05   ÍndiceTabSimb: 15  Linha: 37.
 Lexeme: true              Código: PRS07   ÍndiceTabSimb: -   Linha: 38.
 Lexeme: else              Código: PRS21   ÍndiceTabSimb: -   Linha: 39.
 Lexeme: false             Código: PRS08   ÍndiceTabSimb: -   Linha: 40.

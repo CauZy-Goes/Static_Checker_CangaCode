@@ -3,7 +3,7 @@
 program SistemaAcademico
 
 declarations
-    integer matricula
+    integer matriculaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooo
     string nome
     char genero
     real nota1
@@ -26,11 +26,11 @@ endFuncType
 endFunctions
 
 start
-    matricula = 20231001
-    nome = "Ana Beatriz"
-    genero = 'F'
-    nota1 = 8.5
-    nota2 = 9.3
+    matricula := 20231001
+    nome := "Ana Beatrizasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    genero := 'F'
+    nota1 := 800000000000000000000000000000000000000000000000000000000000.5
+    nota2 := 9
 
     media = calcularMedia(nota1, nota2)
 

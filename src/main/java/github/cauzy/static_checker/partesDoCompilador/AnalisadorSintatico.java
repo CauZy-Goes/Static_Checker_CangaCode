@@ -21,6 +21,8 @@ public class AnalisadorSintatico {
 
         String [] linhas = analisadorLexico.aplicarFiltros(listaCanga);
 
+        linhas = analisadorLexico.limparCaracteresInválidos(linhas, listaCanga);
+
         for (String linha : linhas) {
             System.out.println(linha);
         }

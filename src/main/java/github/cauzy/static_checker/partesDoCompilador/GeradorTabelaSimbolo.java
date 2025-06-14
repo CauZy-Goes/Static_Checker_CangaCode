@@ -18,16 +18,19 @@ public class GeradorTabelaSimbolo {
 
             // Só processa identificadores
             if (codigoAtomo.startsWith("IDN")) {
-                String lexema = token.atomoCangaCode().lexeme();
+                String lexemaOriginal = token.atomoCangaCode().lexeme();
                 int linha = token.linha();
 
-                String lexemaTruncado = lexema.length() > 35 ? lexema.substring(0, 35) : lexema;
-                int tamAntes = lexema.length();
+                // Truncagem só para armazenamento (depois da classificação)
+                String lexemaTruncado = aplicarTruncagem(lexemaOriginal, codigoAtomo);
+
+                int tamAntes = lexemaOriginal.length();
                 int tamDepois = lexemaTruncado.length();
 
                 String tipoSimbolo = determinarTipoSimbolo(codigoAtomo);
 
-                String chave = lexema + "-" + codigoAtomo;
+                // Chave baseada no lexema original + código para garantir unicidade real
+                String chave = lexemaOriginal + "-" + codigoAtomo;
 
                 if (!tabela.containsKey(chave)) {
                     List<Integer> linhas = new ArrayList<>();
@@ -49,9 +52,26 @@ public class GeradorTabelaSimbolo {
                 }
             }
         }
-        preencherTiposDasVariaveis(tokens);
 
+        preencherTiposDasVariaveis(tokens);
         return tabela;
+    }
+
+    private String aplicarTruncagem(String lexema, String codigoAtomo) {
+        int tamAntes = lexema.length();
+
+        // Se for String (IDN06) ou Char (IDN07), incluir as aspas no limite dos 35 caracteres
+        if (codigoAtomo.equals("IDN06") || codigoAtomo.equals("IDN07")) {
+            if (tamAntes > 35) {
+                // Mantém a primeira aspas, corta o conteúdo e mantém a última aspas dentro dos 35
+                return lexema.substring(0, 34) + "\"";
+            } else {
+                return lexema;
+            }
+        } else {
+            // Demais tipos: só cortar puro
+            return tamAntes > 35 ? lexema.substring(0, 35) : lexema;
+        }
     }
 
     public void preencherTiposDasVariaveis(List<Token> tokens) {
@@ -61,7 +81,7 @@ public class GeradorTabelaSimbolo {
             String codigo = token.atomoCangaCode().codigo();
             String lexema = token.atomoCangaCode().lexeme();
 
-            // Verificar se o token é um tipo primitivo (ex: integer, string, etc)
+            // Verificar se é declaração de tipo
             switch (lexema) {
                 case "integer" -> tipoAtual = "IN";
                 case "string" -> tipoAtual = "ST";
@@ -69,16 +89,15 @@ public class GeradorTabelaSimbolo {
                 case "real" -> tipoAtual = "FP";
                 case "boolean" -> tipoAtual = "BL";
                 default -> {
-                    // Se o token for identificador de variável, e temos um tipo corrente
                     if (tipoAtual != null && codigo.equals("IDN02")) {
                         for (ItemTabelaSimbolo item : tabela.values()) {
-                            if (item.getLexema().equals(lexema) && item.getCodigo().equals(codigo)) {
+                            // Compare pelo lexema original (chave da tabela)
+                            if (item.getLexema().equals(aplicarTruncagem(lexema, codigo)) && item.getCodigo().equals(codigo)) {
                                 item.setTipo(tipoAtual);
                             }
                         }
                     }
 
-                    // Se chegarmos num token que não é tipo nem IDN, resetar tipoAtual
                     if (!codigo.startsWith("IDN")) {
                         tipoAtual = null;
                     }
@@ -87,45 +106,16 @@ public class GeradorTabelaSimbolo {
         }
     }
 
-
     private String determinarTipoSimbolo(String codigoAtomo) {
         return switch (codigoAtomo) {
-            case "IDN01" -> "VD";  // Nome de programa (assumindo tipo Void/VD por enquanto)
-            case "IDN02" -> "-";   // Variáveis: tipo pode ser preenchido depois por outra fase do compilador
-            case "IDN03" -> "VD";  // Nome de função (Void por padrão aqui)
-            case "IDN04" -> "IN";  // Inteiro
+            case "IDN01" -> "VD";  // Nome de programa
+            case "IDN02" -> "-";   // Variáveis (preenchido depois)
+            case "IDN03" -> "VD";  // Nome de função
+            case "IDN04" -> "IN";  // Integer
             case "IDN05" -> "FP";  // Floating Point
             case "IDN06" -> "ST";  // String
             case "IDN07" -> "CH";  // Char
-            default -> "-";        // Qualquer outro (por segurança)
-        };
-    }
-
-    private void adicionarOuAtualizar(String id, String tipo, int linha) {
-        String lexema = id.length() > 35 ? id.substring(0, 35) : id;
-        int tamAntes = id.length();
-        int tamDepois = lexema.length();
-
-        if (!tabela.containsKey(id)) {
-            List<Integer> linhas = new ArrayList<>();
-            linhas.add(linha);
-            tabela.put(id, new ItemTabelaSimbolo(contador++, "IDE", lexema, tamAntes, tamDepois, tipo, linhas));
-        } else {
-            List<Integer> linhasExistentes = tabela.get(id).getLinhas();
-            if (linhasExistentes.size() < 5 && !linhasExistentes.contains(linha)) {
-                linhasExistentes.add(linha);
-            }
-        }
-    }
-
-    private String tipoParaSigla(String tipo) {
-        return switch (tipo) {
-            case "integer" -> "IN";
-            case "string" -> "ST";
-            case "char" -> "CH";
-            case "real" -> "RE";
-            case "boolean" -> "BO";
-            default -> "??";
+            default -> "-";        // Qualquer outro
         };
     }
 

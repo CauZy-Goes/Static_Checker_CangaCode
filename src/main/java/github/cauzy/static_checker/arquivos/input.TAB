@@ -10,9 +10,9 @@ Entrada: 1, Codigo: IDN01, Lexeme: SistemaAcademico,
 QtdCharAntesTrunc: 16, QtdCharDepoisTrunc: 16,
 TipoSimb: VD, Linhas: [3].
 -------------------------------------------------------------
-Entrada: 2, Codigo: IDN02, Lexeme: matricula,
-QtdCharAntesTrunc: 9, QtdCharDepoisTrunc: 9,
-TipoSimb: IN, Linhas: [6, 21].
+Entrada: 2, Codigo: IDN02, Lexeme: matriculaaaaaaaaaaaaaaaaaaaoooooooo,
+QtdCharAntesTrunc: 55, QtdCharDepoisTrunc: 35,
+TipoSimb: IN, Linhas: [6].
 -------------------------------------------------------------
 Entrada: 3, Codigo: IDN02, Lexeme: nome,
 QtdCharAntesTrunc: 4, QtdCharDepoisTrunc: 4,
@@ -38,27 +38,31 @@ Entrada: 8, Codigo: IDN03, Lexeme: exibirAluno,
 QtdCharAntesTrunc: 11, QtdCharDepoisTrunc: 11,
 TipoSimb: VD, Linhas: [20].
 -------------------------------------------------------------
-Entrada: 9, Codigo: IDN02, Lexeme: media,
+Entrada: 9, Codigo: IDN02, Lexeme: matricula,
+QtdCharAntesTrunc: 9, QtdCharDepoisTrunc: 9,
+TipoSimb: IN, Linhas: [21].
+-------------------------------------------------------------
+Entrada: 10, Codigo: IDN02, Lexeme: media,
 QtdCharAntesTrunc: 5, QtdCharDepoisTrunc: 5,
 TipoSimb: FP, Linhas: [23].
 -------------------------------------------------------------
-Entrada: 10, Codigo: IDN04, Lexeme: 20231001,
+Entrada: 11, Codigo: IDN04, Lexeme: 20231001,
 QtdCharAntesTrunc: 8, QtdCharDepoisTrunc: 8,
 TipoSimb: IN, Linhas: [29].
 -------------------------------------------------------------
-Entrada: 11, Codigo: IDN06, Lexeme: "Ana Beatriz",
-QtdCharAntesTrunc: 13, QtdCharDepoisTrunc: 13,
+Entrada: 12, Codigo: IDN06, Lexeme: "Ana Beatrizasdddddddddddddddddddd",
+QtdCharAntesTrunc: 71, QtdCharDepoisTrunc: 35,
 TipoSimb: ST, Linhas: [30].
 -------------------------------------------------------------
-Entrada: 12, Codigo: IDN05, Lexeme: 8.5,
-QtdCharAntesTrunc: 3, QtdCharDepoisTrunc: 3,
+Entrada: 13, Codigo: IDN05, Lexeme: 80000000000000000000000000000000000,
+QtdCharAntesTrunc: 62, QtdCharDepoisTrunc: 35,
 TipoSimb: FP, Linhas: [32].
 -------------------------------------------------------------
-Entrada: 13, Codigo: IDN05, Lexeme: 9.3,
-QtdCharAntesTrunc: 3, QtdCharDepoisTrunc: 3,
-TipoSimb: FP, Linhas: [33].
+Entrada: 14, Codigo: IDN04, Lexeme: 9,
+QtdCharAntesTrunc: 1, QtdCharDepoisTrunc: 1,
+TipoSimb: IN, Linhas: [33].
 -------------------------------------------------------------
-Entrada: 14, Codigo: IDN05, Lexeme: 7.0,
+Entrada: 15, Codigo: IDN05, Lexeme: 7.0,
 QtdCharAntesTrunc: 3, QtdCharDepoisTrunc: 3,
 TipoSimb: FP, Linhas: [37].
 -------------------------------------------------------------

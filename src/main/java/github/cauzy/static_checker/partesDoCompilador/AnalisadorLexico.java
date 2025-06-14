@@ -7,66 +7,115 @@ import lombok.Data;
 import java.util.*;
 
 @Data
-public class AnalisadorLexico {
+    public class AnalisadorLexico {
 
-    private final Buffer buffer;
-    private final String caminhoArquivo251;
+        private final Buffer buffer;
+        private final String caminhoArquivo251;
 
-    private final Map<String, Integer> tabelaSimbolos = new HashMap<>();
-    private int proximoIndiceSimbolo = 1;
-    private String contexto = "";
-    private boolean contextoConsumido = false;
+        private final Map<String, Integer> tabelaSimbolos = new HashMap<>();
+        private int proximoIndiceSimbolo = 1;
+        private String contexto = "";
+        private boolean contextoConsumido = false;
 
-    public String[] aplicarFiltros(List<AtomoCangaCode> listaCanga) {
-        String[] linhas = buffer.quebrarTextoEmLinhas(buffer.converterArquivoParaString(caminhoArquivo251));
-        linhas = limparComentarios(linhas);
-        return linhas;
-    }
+        public String[] aplicarFiltros(List<AtomoCangaCode> listaCanga) {
+            String[] linhas = buffer.quebrarTextoEmLinhas(buffer.converterArquivoParaString(caminhoArquivo251));
+            linhas = limparComentarios(linhas);
+//            linhas = limparCaracteresInválidos(linhas, listaCanga);
+            return linhas;
+        }
 
-    public String[] limparComentarios(String[] linhas) {
+        public String[] limparComentarios(String[] linhas) {
+            String[] resultado = new String[linhas.length];
+            boolean emComentarioDeBloco = false;
+
+            for (int i = 0; i < linhas.length; i++) {
+                String linha = linhas[i];
+
+                if (emComentarioDeBloco) {
+                    int fimComentario = linha.indexOf("*/");
+                    if (fimComentario != -1) {
+                        linha = linha.substring(fimComentario + 2);
+                        emComentarioDeBloco = false;
+                    } else {
+                        resultado[i] = "";
+                        continue;
+                    }
+                }
+
+                while (true) {
+                    int inicioComentarioBloco = linha.indexOf("/*");
+                    int inicioComentarioLinha = linha.indexOf("//");
+
+                    if (inicioComentarioBloco != -1 && (inicioComentarioLinha == -1 || inicioComentarioBloco < inicioComentarioLinha)) {
+                        int fimComentarioBloco = linha.indexOf("*/", inicioComentarioBloco + 2);
+                        if (fimComentarioBloco != -1) {
+                            linha = linha.substring(0, inicioComentarioBloco) + linha.substring(fimComentarioBloco + 2);
+                        } else {
+                            linha = linha.substring(0, inicioComentarioBloco);
+                            emComentarioDeBloco = true;
+                            break;
+                        }
+                    } else if (inicioComentarioLinha != -1) {
+                        linha = linha.substring(0, inicioComentarioLinha);
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+
+                resultado[i] = linha.trim();
+            }
+
+            return resultado;
+        }
+
+    public String[] limparCaracteresInválidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
         String[] resultado = new String[linhas.length];
-        boolean emComentarioDeBloco = false;
 
         for (int i = 0; i < linhas.length; i++) {
             String linha = linhas[i];
+            List<String> lexemas = separarLexemas(linha);
+            StringBuilder linhaFiltrada = new StringBuilder();
+            String anterior = "";
 
-            if (emComentarioDeBloco) {
-                int fimComentario = linha.indexOf("*/");
-                if (fimComentario != -1) {
-                    linha = linha.substring(fimComentario + 2);
-                    emComentarioDeBloco = false;
+            for (String lexeme : lexemas) {
+                if (lexeme.isBlank()) continue;
+
+                atualizarContexto(anterior);
+
+                // Primeiro tenta encontrar o lexema no vocabulário oficial
+                Optional<AtomoCangaCode> reservado = listaCanga.stream()
+                        .filter(a -> a.lexeme().equals(lexeme))
+                        .findFirst();
+
+                AtomoCangaCode atomo;
+
+                if (reservado.isPresent()) {
+                    atomo = reservado.get();
                 } else {
-                    resultado[i] = "";
-                    continue;
+                    atomo = classificarIdentificador(lexeme);
                 }
+
+                // Só inclui lexemas válidos (ignorando AIN02)
+                if (atomo != null && !atomo.codigo().equals("AIN02")) {
+                    linhaFiltrada.append(lexeme).append(" ");
+                }
+
+                anterior = lexeme;
             }
 
-            while (true) {
-                int inicioComentarioBloco = linha.indexOf("/*");
-                int inicioComentarioLinha = linha.indexOf("//");
+            resultado[i] = linhaFiltrada.toString().trim();
 
-                if (inicioComentarioBloco != -1 && (inicioComentarioLinha == -1 || inicioComentarioBloco < inicioComentarioLinha)) {
-                    int fimComentarioBloco = linha.indexOf("*/", inicioComentarioBloco + 2);
-                    if (fimComentarioBloco != -1) {
-                        linha = linha.substring(0, inicioComentarioBloco) + linha.substring(fimComentarioBloco + 2);
-                    } else {
-                        linha = linha.substring(0, inicioComentarioBloco);
-                        emComentarioDeBloco = true;
-                        break;
-                    }
-                } else if (inicioComentarioLinha != -1) {
-                    linha = linha.substring(0, inicioComentarioLinha);
-                    break;
-                } else {
-                    break;
-                }
+            // Limpa contexto se necessário
+            if (contextoConsumido) {
+                contexto = "";
+                contextoConsumido = false;
             }
-
-            resultado[i] = linha.trim();
         }
 
         return resultado;
     }
+
 
     public List<Token> capturarTokensValidos(String[] linhas, List<AtomoCangaCode> listaCanga) {
         List<Token> tokens = new ArrayList<>();
