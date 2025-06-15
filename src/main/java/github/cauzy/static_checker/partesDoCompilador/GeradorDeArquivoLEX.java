@@ -53,10 +53,10 @@ public class GeradorDeArquivoLEX {
                 if (lexemeOriginal.length() > 35) {
                     if (lexemeOriginal.startsWith("\"")) {
                         // Lexeme é uma string → Truncar e colocar uma aspas de fechamento
-                        lexemeExibicao = lexemeOriginal.substring(0, 34) + "\"";
+                        lexemeExibicao = lexemeOriginal.substring(0, 32) + "\"";
                     } else {
                         // Qualquer outro lexema → Só trunca puro
-                        lexemeExibicao = lexemeOriginal.substring(0, 35);
+                        lexemeExibicao = lexemeOriginal.substring(0, 33);
                     }
                 } else {
                     lexemeExibicao = lexemeOriginal;

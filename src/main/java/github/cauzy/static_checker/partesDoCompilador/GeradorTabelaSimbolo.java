@@ -58,13 +58,13 @@ public class GeradorTabelaSimbolo {
         int tamAntes = lexema.length();
 
         if (codigoAtomo.equals("IDN06") || codigoAtomo.equals("IDN07")) {
-            if (tamAntes > 35) {
-                return lexema.substring(0, 34) + "\"";
+            if (tamAntes > 33) {
+                return lexema.substring(0, 32) + "\"";
             } else {
                 return lexema;
             }
         } else {
-            return tamAntes > 35 ? lexema.substring(0, 35) : lexema;
+            return tamAntes > 33 ? lexema.substring(0, 33) : lexema;
         }
     }
 
