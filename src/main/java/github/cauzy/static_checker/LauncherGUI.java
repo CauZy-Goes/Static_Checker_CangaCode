@@ -11,7 +11,7 @@ public class LauncherGUI extends JFrame {
     private File arquivoSelecionado;
 
     public LauncherGUI() {
-        setTitle("CangaCode2025 - Analisador Léxico & Sintático");
+        setTitle("CangaCode2025 - Analisador Léxico & Tabela De Símbolos");
         setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -23,7 +23,7 @@ public class LauncherGUI extends JFrame {
 
         // Cabeçalho
         JLabel cabecalho = new JLabel("<html><div style='text-align:center;'>"
-                + "<h2 style='color:blue;'>CangaCode2025 - Analisador Léxico & Sintático</h2>"
+                + "<h2 style='color:blue;'>CangaCode2025 - Analisador Léxico & Tabela De Símbolos</h2>"
                 + "<b style='text-align:center; font-weight:bold; font-size:13px; margin-bottom:0; padding-bottom:0;'>Código da Equipe:</b> EQ01<br>"
                 + "<b style='text-align:center; font-weight:bold; font-size:13px; margin-bottom:0; padding-bottom:0;'>Componentes:</b><br>"
                 + "CAUÃ GOES FARIAS - caua.farias@ucsal.edu.br - 71993209370<br>"
