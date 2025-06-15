@@ -4,6 +4,7 @@ import github.cauzy.static_checker.entidadesDoCompilador.AtomoCangaCode;
 import github.cauzy.static_checker.entidadesDoCompilador.ItemTabelaSimbolo;
 import github.cauzy.static_checker.entidadesDoCompilador.Token;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,14 @@ public class AnalisadorSintatico {
                 "KAILAN DE SOUZA DIAS; kailan.dias@ucsal.edu.br; 75988059380"
         };
 
-        GeradorDeArquivoLEX geradorDeArquivoLEX = new GeradorDeArquivoLEX("EQ01", componentes, "input.251");
+        File arquivo = new File(caminhoDoArquivo);
+        String nomeTextoFonteAnalisado = arquivo.getName();
+
+        GeradorDeArquivoLEX geradorDeArquivoLEX = new GeradorDeArquivoLEX("EQ01", componentes, nomeTextoFonteAnalisado);
         geradorDeArquivoLEX.gerarArquivoLEX(listaDeTokens);
 
         GeradorTabelaSimbolo geradorTabelaSimbolo = new GeradorTabelaSimbolo();
-        GeradorDeArquivoTAB geradorDeArquivoTAB = new GeradorDeArquivoTAB("EQ01", componentes, "input.251");
+        GeradorDeArquivoTAB geradorDeArquivoTAB = new GeradorDeArquivoTAB("EQ01", componentes, nomeTextoFonteAnalisado);
 
         Map<String, ItemTabelaSimbolo> itens =  geradorTabelaSimbolo.processarTokens(listaDeTokens, listaCanga);
 

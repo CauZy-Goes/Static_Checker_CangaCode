@@ -59,7 +59,7 @@ public class LauncherGUI extends JFrame {
 
         // Label que mostra o caminho
         JLabel caminhoArquivo = new JLabel(" ");
-        caminhoArquivo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        caminhoArquivo.setAlignmentX(Component.CENTER_ALIGNMENT);
         painelCentro.add(Box.createVerticalStrut(10)); // Espaço vertical
         painelCentro.add(caminhoArquivo);
 
